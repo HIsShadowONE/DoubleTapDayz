@@ -39,7 +39,7 @@ while {true} do {
 	waitUntil { !canBuild };
 
 	_inSafezoneFinished = false;
-	if ( AGN_safeZoneMessages ) then { systemChat ("Entering Trader Area - God Mode Enabled"); player removeAction s_player_arrest; player removeAction s_player_knockout};
+	if ( AGN_safeZoneMessages ) then { systemChat ("Entering Trader Area - Safe Zone Enabled."); player removeAction s_player_arrest; player removeAction s_player_knockout};
 	_thePlayer = player;
 	
 	if ( AGN_safeZoneGodmode ) then
@@ -72,7 +72,7 @@ while {true} do {
 	if ( AGN_safeZone_Players_DisableWeaponFiring ) then
 	{
 		_EH_Fired = _thePlayer addEventHandler ["Fired", {
-			systemChat ("You can not fire your weapon in a Trader City Area");
+			systemChat ("You can not fire your weapon in a Trader City Area.");
 			NearestObject [_this select 0,_this select 4] setPos[0,0,0];
 		}];
 	};
@@ -180,7 +180,7 @@ while {true} do {
 					};
 				};
 				if ( _skip && _if ) then {
-					if ( AGN_safeZoneMessages ) then { systemChat ("This player is tagged friendly, you have access to this players bag") };
+					if ( AGN_safeZoneMessages ) then { systemChat ("This player is tagged friendly, you have access to this players bag.") };
 				};
 			};
 		};
@@ -205,7 +205,7 @@ while {true} do {
 				_inVehicle = vehicle player;
 				_inVehicleDamage = getDammage _inVehicle;
 				_EH_Fired_Vehicle = _inVehicle addEventHandler ["Fired", {
-					systemChat ("You can not fire your vehicles weapon in a Trader City Area");
+					systemChat ("You can not fire your vehicles weapon in a Trader City Area.");
 					NearestObject [_this select 0,_this select 4] setPos[0,0,0];
 				}];
 			};
@@ -218,19 +218,19 @@ while {true} do {
 	AGN_LastPlayerLookedAtCountDown = 5;
 	terminate _antiBackpackThread;
 	terminate _antiBackpackThread2;
-	if ( AGN_safeZoneMessages ) then { systemChat ("Exiting Trader Area - God Mode Disabled");};
+	if ( AGN_safeZoneMessages ) then { systemChat ("Exiting Trader Area - Safe Zone Disabled.");};
 	
 	if ( AGN_safeZone_Vehicles_DisableMountedGuns ) then
 	{
 		if ( !(isNull _inVehicle) ) then
 		{
-			if ( AGN_safeZoneMessages ) then { systemChat ( "No Firing Vehicle Guns Disabled" ); };
+			if ( AGN_safeZoneMessages ) then { systemChat ( "No Firing Vehicle Guns Disabled." ); };
 			_inVehicle removeEventHandler ["Fired", _EH_Fired_Vehicle];
 		};
 		
 		if ( !(isNull _inVehicleLast) ) then
 		{
-			if ( AGN_safeZoneMessages ) then { systemChat ( "No Firing Vehicle Guns Disabled" ); };
+			if ( AGN_safeZoneMessages ) then { systemChat ( "No Firing Vehicle Guns Disabled." ); };
 			_inVehicleLast removeEventHandler ["Fired", _EH_Fired_Vehicle];
 		};
 	};
