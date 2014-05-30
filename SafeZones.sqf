@@ -225,7 +225,7 @@ while {true} do {
 	AGN_LastPlayerLookedAtCountDown = 5;
 	terminate _antiBackpackThread;
 	terminate _antiBackpackThread2;
-if ( AGN_safeZoneMessages ) then { systemChat ("Exiting Trader Area - God Mode Disabled"); s_player_arrest = player addaction [("<t color=""#0074E8"">" + ("Detain") +"</t>"), "scripts\arrest\Detain.sqf",_cursorTarget,100,false,true,"", ""];};
+if ( AGN_safeZoneMessages ) then { systemChat ("Exiting Trader Area - Safe Zone Disabled"); s_player_arrest = player addaction [("<t color=""#0074E8"">" + ("Detain") +"</t>"), "scripts\arrest\Detain.sqf",_cursorTarget,100,false,true,"", ""];};
 		
 		
 	// Detain menu option disappear
