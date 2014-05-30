@@ -1,15 +1,18 @@
 /*
  * Safezone Commander Script by AlienX
- * Custom Edits by HisShadow & LunchBox
+ * www.opendayz.net
+ * Thanks to everyone who has provided other scripts of the same format, without you I would not have been able to make this.
  */
 
-diag_log ( "Starting SAFEZONES" );
+diag_log ( "[AGN] Starting Trader City Safezone Commander!" );
  
-if ( isDedicated || isServer ) exitWith {diag_log ( "Error: SAFEZONES not in !isDedicated in init.sqf" );}; 
+if ( isDedicated || isServer ) exitWith {diag_log ( "Error: Attempting to start AGN products on a server where it should not be!" );}; 
 
 Private ["_EH_Fired","_ehID","_fix","_inVehicle","_inVehicleLast","_EH_Fired_Vehicle","_inVehicleDamage","_antiBackpackThread","_antiBackpackThread2","AGN_safeZoneGodmode","AGN_safeZoneMessages","AGN_safeZone_Backpack_AllowGearFromLootPiles","AGN_safeZone_Backpack_AllowGearFromVehicles","AGN_safeZone_Backpack_AllowGearFromDeadPlayers","AGN_safeZone_Vehicles_DisableMountedGuns","AGN_safeZone_Players_DisableWeaponFiring","AGN_safeZone_Backpack_EnableAntiBackpack","AGN_safeZone_Vehicles_AllowGearFromWithinVehicles","_anti_zombie","_vehicle","_veh_array","_y","_veh_total"];
 
+
 //SCRIPT SETTINGS
+AGN_safeZoneDebug = false; //Debug notes on screen.
 AGN_safeZoneGodmode = true; 								//Should safezone Godmode be enabled?
 AGN_safeZoneMessages = true;								//Should players get messages when entering and exiting the safe zone?
 AGN_safeZone_Backpack_EnableAntiBackpack = true;			//Should players not be able to take from peoples bags?
@@ -22,15 +25,21 @@ AGN_safeZone_Vehicles_AllowGearFromWithinVehicles = true;	//Should players be ab
 AGN_safeZone_Players_DisableWeaponFiring = true;			//Should players not be able to shoot bullets/projectiles from their weapon(s)?
 AGN_safeZone_Players_RemoveZombies= true;				//Players allowed to delete zombies while in safe zone?
 
-//Probs not needed
+//Probs not needed, but meh :)
 disableSerialization;
 
-	_inVehicle = objNull;
-	_inVehicleLast = objNull;
-	while {true} do {
+waitUntil {!isNil "dayz_animalCheck"};
+if ( AGN_safeZoneMessages ) then { systemChat ( "" ); };
+
+_inVehicle = objNull;
+_inVehicleLast = objNull;
+
+while {true} do {
+	
 	waitUntil { !canBuild };
+
 	_inSafezoneFinished = false;
-	if ( AGN_safeZoneMessages ) then { systemChat ("Entering Trader Area - Safe Zone Enabled.");};
+	if ( AGN_safeZoneMessages ) then { systemChat ("Entering Trader Area - Safe Zone Enabled");
 	_thePlayer = player;
 	
 	if ( AGN_safeZoneGodmode ) then
@@ -42,6 +51,7 @@ disableSerialization;
 		_thePlayer allowDamage false;
 		_inVehicle allowDamage false;
 		player removeAction s_player_arrest;
+		player removeAction s_player_knockout;
 	};
 
 	if ( AGN_safeZone_Players_RemoveZombies ) then
@@ -64,7 +74,7 @@ disableSerialization;
 	if ( AGN_safeZone_Players_DisableWeaponFiring ) then
 	{
 		_EH_Fired = _thePlayer addEventHandler ["Fired", {
-			systemChat ("You can not fire your weapon in a Trader City Area.");
+			systemChat ("You can not fire your weapon in a Trader City Area");
 			NearestObject [_this select 0,_this select 4] setPos[0,0,0];
 		}];
 	};
@@ -134,6 +144,11 @@ disableSerialization;
 							};
 						};
 					};
+					if ( AGN_safeZoneDebug ) then {
+					hintSilent ( format["AGN Safezone Commander\n\nCursorTarget\n%1\n\nDistance\n%2\n\nLootpile\n%3 [%9]\n\nisPlayer\n%4\n\nAlive\n%5\n\nisVehicle\n%6\n\ninVehicle\n%7\n\nisFriendly\n%8 (%12) [%10]\n\nSkip: %11\n",
+                                                _ct, _dis, _lp, _ip, _ia, _iv, _inv, _if, AGN_safeZone_Backpack_AllowGearFromLootPiles, AGN_safeZone_Backpack_AllowFriendlyTaggedAccess, _skip, _ctOwnerID] );
+};
+
 					
 					//Lootpile check
 					if ( _lp ) then {_skip = true;};
@@ -167,7 +182,7 @@ disableSerialization;
 					};
 				};
 				if ( _skip && _if ) then {
-					if ( AGN_safeZoneMessages ) then { systemChat ("This player is tagged friendly, you have access to this players bag.") };
+					if ( AGN_safeZoneMessages ) then { systemChat ("This player is tagged friendly, you have access to this players bag") };
 				};
 			};
 		};
@@ -192,7 +207,7 @@ disableSerialization;
 				_inVehicle = vehicle player;
 				_inVehicleDamage = getDammage _inVehicle;
 				_EH_Fired_Vehicle = _inVehicle addEventHandler ["Fired", {
-					systemChat ("You can not fire your vehicles weapon in a Trader City Area.");
+					systemChat ("You can not fire your vehicles weapon in a Trader City Area");
 					NearestObject [_this select 0,_this select 4] setPos[0,0,0];
 				}];
 			};
@@ -205,19 +220,19 @@ disableSerialization;
 	AGN_LastPlayerLookedAtCountDown = 5;
 	terminate _antiBackpackThread;
 	terminate _antiBackpackThread2;
-	if ( AGN_safeZoneMessages ) then { systemChat ("Exiting Trader Area - Safe Zone Disabled.");};
+if ( AGN_safeZoneMessages ) then { systemChat ("Exiting Trader Area - God Mode Disabled"); s_player_arrest = player addaction [("<t color=""#0074E8"">" + ("Detain") +"</t>"), "scripts\arrest\Detain.sqf",_cursorTarget,100,false,true,"", ""];};
 	
 	if ( AGN_safeZone_Vehicles_DisableMountedGuns ) then
 	{
 		if ( !(isNull _inVehicle) ) then
 		{
-			if ( AGN_safeZoneMessages ) then { systemChat ( "No Firing Vehicle Guns Disabled." ); };
+			if ( AGN_safeZoneMessages ) then { systemChat ( "No Firing Vehicle Guns Disabled" ); };
 			_inVehicle removeEventHandler ["Fired", _EH_Fired_Vehicle];
 		};
 		
 		if ( !(isNull _inVehicleLast) ) then
 		{
-			if ( AGN_safeZoneMessages ) then { systemChat ( "No Firing Vehicle Guns Disabled." ); };
+			if ( AGN_safeZoneMessages ) then { systemChat ( "No Firing Vehicle Guns Disabled" ); };
 			_inVehicleLast removeEventHandler ["Fired", _EH_Fired_Vehicle];
 		};
 	};
