@@ -1,22 +1,20 @@
 /*
  * Safezone Commander Script by AlienX
- * www.opendayz.net
- * Thanks to everyone who has provided other scripts of the same format, without you I would not have been able to make this.
+ * Custom Edits by HisShadow & LunchBox
  */
 
-diag_log ( "[AGN] Starting Trader City Safezone Commander!" );
+diag_log ( "Starting SAFEZONES" );
  
-if ( isDedicated || isServer ) exitWith {diag_log ( "Error: Attempting to start AGN products on a server where it should not be!" );}; 
+if ( isDedicated || isServer ) exitWith {diag_log ( "Error: SAFEZONES not in !isDedicated in init.sqf" );}; 
 
 Private ["_EH_Fired","_ehID","_fix","_inVehicle","_inVehicleLast","_EH_Fired_Vehicle","_inVehicleDamage","_antiBackpackThread","_antiBackpackThread2","AGN_safeZoneGodmode","AGN_safeZoneMessages","AGN_safeZone_Backpack_AllowGearFromLootPiles","AGN_safeZone_Backpack_AllowGearFromVehicles","AGN_safeZone_Backpack_AllowGearFromDeadPlayers","AGN_safeZone_Vehicles_DisableMountedGuns","AGN_safeZone_Players_DisableWeaponFiring","AGN_safeZone_Backpack_EnableAntiBackpack","AGN_safeZone_Vehicles_AllowGearFromWithinVehicles","_anti_zombie","_vehicle","_veh_array","_y","_veh_total"];
 
-
 //SCRIPT SETTINGS
-AGN_safeZoneDebug = false; //Debug notes on screen.
 AGN_safeZoneGodmode = true; 								//Should safezone Godmode be enabled?
 AGN_safeZoneMessages = true;								//Should players get messages when entering and exiting the safe zone?
 AGN_safeZone_Backpack_EnableAntiBackpack = true;			//Should players not be able to take from peoples bags?
 AGN_safeZone_Backpack_AllowGearFromLootPiles = true;		//Should players be able to loot from loot piles?
+AGN_safeZone_Backpack_AllowGearFromVehicles = false;		//Should players be able to loot from a vehicles gear?
 AGN_safeZone_Backpack_AllowGearFromDeadPlayers = true;		//Should players be able to loot from a dead players corpse?
 AGN_safeZone_Backpack_AllowFriendlyTaggedAccess = true;	//Should players who are tagged friendly be able to access eachothers bags?
 AGN_safeZone_Vehicles_DisableMountedGuns = true;			//Should players not be able to shoot bullets/projectiles from mounted guns?
@@ -24,19 +22,13 @@ AGN_safeZone_Vehicles_AllowGearFromWithinVehicles = true;	//Should players be ab
 AGN_safeZone_Players_DisableWeaponFiring = true;			//Should players not be able to shoot bullets/projectiles from their weapon(s)?
 AGN_safeZone_Players_RemoveZombies= true;				//Players allowed to delete zombies while in safe zone?
 
-//Probs not needed, but meh :)
+//Probs not needed
 disableSerialization;
 
-waitUntil {!isNil "dayz_animalCheck"};
-if ( AGN_safeZoneMessages ) then { systemChat ( "" ); };
-
-_inVehicle = objNull;
-_inVehicleLast = objNull;
-
-while {true} do {
-	
+	_inVehicle = objNull;
+	_inVehicleLast = objNull;
+	while {true} do {
 	waitUntil { !canBuild };
-
 	_inSafezoneFinished = false;
 	if ( AGN_safeZoneMessages ) then { systemChat ("Entering Trader Area - Safe Zone Enabled."); player removeAction s_player_arrest; player removeAction s_player_knockout;};
 	_thePlayer = player;
@@ -141,12 +133,15 @@ while {true} do {
 							};
 						};
 					};
-			
+					
 					//Lootpile check
 					if ( _lp ) then {_skip = true;};
 					
 					//Dead body check
 					if ( !(_ia) && AGN_safeZone_Backpack_AllowGearFromDeadPlayers ) then {_skip = true;};
+					
+					//Vehicle check
+					if ( _iv && (_dis < 10) && !(_ip) && AGN_safeZone_Backpack_AllowGearFromVehicles ) then {_skip = true;};
 					
 					//In a vehicle check
 					if ( _inv && AGN_safeZone_Vehicles_AllowGearFromWithinVehicles ) then { _skip = true; };
