@@ -30,7 +30,7 @@ disableSerialization;
 	while {true} do {
 	waitUntil { !canBuild };
 	_inSafezoneFinished = false;
-	if ( AGN_safeZoneMessages ) then { systemChat ("Entering Trader Area - Safe Zone Enabled."); player removeAction s_player_arrest; player removeAction s_player_knockout;};
+	if ( AGN_safeZoneMessages ) then { systemChat ("Entering Trader Area - Safe Zone Enabled."); player removeAction s_player_arrest;};
 	_thePlayer = player;
 	
 	if ( AGN_safeZoneGodmode ) then
