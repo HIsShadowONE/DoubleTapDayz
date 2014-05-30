@@ -38,7 +38,7 @@ while {true} do {
 	waitUntil { !canBuild };
 
 	_inSafezoneFinished = false;
-	if ( AGN_safeZoneMessages ) then { systemChat ("Entering Trader Area - Safe Zone Enabled");
+	if ( AGN_safeZoneMessages ) then { systemChat ("Entering Trader Area - Safe Zone Enabled");};
 	_thePlayer = player;
 	
 	if ( AGN_safeZoneGodmode ) then
