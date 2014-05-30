@@ -30,7 +30,7 @@ disableSerialization;
 	while {true} do {
 	waitUntil { !canBuild };
 	_inSafezoneFinished = false;
-	if ( AGN_safeZoneMessages ) then { systemChat ("Entering Trader Area - Safe Zone Enabled."); player removeAction s_player_arrest;};
+	if ( AGN_safeZoneMessages ) then { systemChat ("Entering Trader Area - Safe Zone Enabled.");};
 	_thePlayer = player;
 	
 	if ( AGN_safeZoneGodmode ) then
@@ -41,6 +41,7 @@ disableSerialization;
 		_thePlayer addEventHandler ["handleDamage", {false}];
 		_thePlayer allowDamage false;
 		_inVehicle allowDamage false;
+		player removeAction s_player_arrest;
 	};
 
 	if ( AGN_safeZone_Players_RemoveZombies ) then
