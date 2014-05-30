@@ -17,7 +17,6 @@ AGN_safeZoneGodmode = true; 								//Should safezone Godmode be enabled?
 AGN_safeZoneMessages = true;								//Should players get messages when entering and exiting the safe zone?
 AGN_safeZone_Backpack_EnableAntiBackpack = true;			//Should players not be able to take from peoples bags?
 AGN_safeZone_Backpack_AllowGearFromLootPiles = true;		//Should players be able to loot from loot piles?
-AGN_safeZone_Backpack_AllowGearFromVehicles = false;		//Should players be able to loot from a vehicles gear?
 AGN_safeZone_Backpack_AllowGearFromDeadPlayers = true;		//Should players be able to loot from a dead players corpse?
 AGN_safeZone_Backpack_AllowFriendlyTaggedAccess = true;	//Should players who are tagged friendly be able to access eachothers bags?
 AGN_safeZone_Vehicles_DisableMountedGuns = true;			//Should players not be able to shoot bullets/projectiles from mounted guns?
@@ -39,7 +38,7 @@ while {true} do {
 	waitUntil { !canBuild };
 
 	_inSafezoneFinished = false;
-	if ( AGN_safeZoneMessages ) then { systemChat ("Entering Trader Area - Safe Zone Enabled."); player removeAction s_player_arrest; player removeAction s_player_knockout};
+	if ( AGN_safeZoneMessages ) then { systemChat ("Entering Trader Area - Safe Zone Enabled."); player removeAction s_player_arrest; player removeAction s_player_knockout;};
 	_thePlayer = player;
 	
 	if ( AGN_safeZoneGodmode ) then
@@ -142,20 +141,12 @@ while {true} do {
 							};
 						};
 					};
-					if ( AGN_safeZoneDebug ) then {
-					hintSilent ( format["AGN Safezone Commander\n\nCursorTarget\n%1\n\nDistance\n%2\n\nLootpile\n%3 [%9]\n\nisPlayer\n%4\n\nAlive\n%5\n\nisVehicle\n%6\n\ninVehicle\n%7\n\nisFriendly\n%8 (%12) [%10]\n\nSkip: %11\n",
-                                                _ct, _dis, _lp, _ip, _ia, _iv, _inv, _if, AGN_safeZone_Backpack_AllowGearFromLootPiles, AGN_safeZone_Backpack_AllowFriendlyTaggedAccess, _skip, _ctOwnerID] );
-};
-
-					
+			
 					//Lootpile check
 					if ( _lp ) then {_skip = true;};
 					
 					//Dead body check
 					if ( !(_ia) && AGN_safeZone_Backpack_AllowGearFromDeadPlayers ) then {_skip = true;};
-					
-					//Vehicle check
-					if ( _iv && (_dis < 10) && !(_ip) && AGN_safeZone_Backpack_AllowGearFromVehicles ) then {_skip = true;};
 					
 					//In a vehicle check
 					if ( _inv && AGN_safeZone_Vehicles_AllowGearFromWithinVehicles ) then { _skip = true; };
