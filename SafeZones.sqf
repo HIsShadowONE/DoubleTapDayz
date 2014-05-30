@@ -1,5 +1,4 @@
-/*
- * Safezone Commander Script by AlienX
+/mander Script by AlienX
  * www.opendayz.net
  * Thanks to everyone who has provided other scripts of the same format, without you I would not have been able to make this.
  */
@@ -225,7 +224,7 @@ while {true} do {
 	AGN_LastPlayerLookedAtCountDown = 5;
 	terminate _antiBackpackThread;
 	terminate _antiBackpackThread2;
-if ( AGN_safeZoneMessages ) then { systemChat ("Exiting Trader Area - Safe Zone Disabled"); s_player_arrest = player addaction [("<t color=""#0074E8"">" + ("Detain") +"</t>"), "scripts\arrest\Detain.sqf",_cursorTarget,100,false,true,"", ""];};
+if ( AGN_safeZoneMessages ) then { systemChat ("Exiting Trader Area - Safe Zone Disabled");};
 		
 		
 	// Detain menu option disappear
