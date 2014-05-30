@@ -52,6 +52,11 @@ while {true} do {
 		_inVehicle allowDamage false;
 		player removeAction s_player_arrest;
 		player removeAction s_player_knockout;
+		
+		// Detain menu option disappear
+		_newCiv = _this select 3;
+		detach _newCiv;
+		_newCiv setVariable ["Detain",1,true];
 	};
 
 	if ( AGN_safeZone_Players_RemoveZombies ) then
@@ -221,6 +226,13 @@ while {true} do {
 	terminate _antiBackpackThread;
 	terminate _antiBackpackThread2;
 if ( AGN_safeZoneMessages ) then { systemChat ("Exiting Trader Area - God Mode Disabled"); s_player_arrest = player addaction [("<t color=""#0074E8"">" + ("Detain") +"</t>"), "scripts\arrest\Detain.sqf",_cursorTarget,100,false,true,"", ""];};
+		
+		
+	// Detain menu option disappear
+	_newCiv = _this select 3;
+	detach _newCiv;
+	_newCiv setVariable ["Detain",0,true];
+	
 	
 	if ( AGN_safeZone_Vehicles_DisableMountedGuns ) then
 	{
