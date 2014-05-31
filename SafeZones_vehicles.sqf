@@ -1,4 +1,7 @@
 // Godmode vehicle in safe zones (Lunchbox).
+// How it works: When in safezone, vehicle takes no damage. However, When the player
+// leaves the safezone with the car in the safezone, the car will take damage.
+// This is to prevent abuses with the safezone system. 
 
 if (isNil "canbuild") then {
 	canbuild = true;
