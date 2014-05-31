@@ -1,5 +1,9 @@
 // Godmode vehicle in safe zones (Lunchbox).
 
+if (isNil "canbuild") then {
+	canbuild = true;
+};
+
 while {true} do {
         
         // Vehicle Godmode on.
