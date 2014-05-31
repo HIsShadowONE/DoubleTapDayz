@@ -1,16 +1,14 @@
 // Godmode vehicle in safe zones (Lunchbox).
+
 while {true} do {
+        
         // Vehicle Godmode on.
 	waitUntil { !canbuild };
 
 	waitUntil { player != vehicle player };
 
 	theVehicle = vehicle player;
-	_EH_VFired = theVehicle addEventHandler ["Fired", {
-		titleText ["You can not fire your weapon in a safe zone.","PLAIN DOWN"]; titleFadeOut 4;
-		NearestObject [_this select 0,_this select 4] setPos[0,0,0];
-	}];
-
+	
 	theVehicle removeAllEventHandlers "handleDamage";
 	theVehicle addEventHandler ["handleDamage", {false}];
 	theVehicle allowDamage false;
@@ -23,8 +21,7 @@ while {true} do {
 	waitUntil { canbuild };
 	
 	// Vehicle Godmode off. 
-	theVehicle removeEventHandler ["Fired", _EH_VFired];
-
+	
 	theVehicle removeAllEventHandlers "handleDamage";
         theVehicle addEventHandler ["handleDamage", {_this select 2}];
 	theVehicle allowDamage true;
