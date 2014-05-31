@@ -1,7 +1,7 @@
 // Godmode vehicle in safe zones (Lunchbox).
 
 if (isNil "canbuild") then {
-	canbuild = false;
+	canbuild = true;
 };
 
 while {true} do {
@@ -20,7 +20,7 @@ while {true} do {
 	fnc_usec_damageVehicle ={};
 	vehicle_handleDamage ={};
 	vehicle_handleKilled ={};
-	hintSilent "Vehicle godmode ON"; // Uncomment this to help see when it actually turns on and off
+	// hintSilent "Vehicle godmode ON"; // Uncomment this to help see when it actually turns on and off
 	
 	waitUntil { canbuild };
 	
@@ -34,6 +34,6 @@ while {true} do {
 	fnc_usec_damageVehicle = compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\fn_damageHandlerVehicle.sqf";
 	vehicle_handleDamage = compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\vehicle_handleDamage.sqf";
 	vehicle_handleKilled = compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\vehicle_handleKilled.sqf";
-	hintSilent "Vehicle godmode OFF"; // Uncomment this to help see when it actually turns on and off
+	// hintSilent "Vehicle godmode OFF"; // Uncomment this to help see when it actually turns on and off
 	
 };
