@@ -4,7 +4,7 @@ if (isNil "canbuild") then {
 	canbuild = true;
 };
 
-while {true} do {
+while {false} do {
         
         // Vehicle Godmode on.
 	waitUntil { !canbuild };
