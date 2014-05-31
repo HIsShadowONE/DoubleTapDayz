@@ -1,11 +1,11 @@
 Private ["_EH_VFired"];
 
-if (isNil "inSafezone") then {
-	inSafezone = false;
+if (isNil "canbuild") then {
+	canbuild = false;
 };
 
 while {true} do {
-	waitUntil { inSafeZone };
+	waitUntil { !canbuild };
 
 	waitUntil { player != vehicle player };
 
@@ -24,12 +24,12 @@ while {true} do {
 	vehicle_handleKilled ={};
 	hintSilent "Vehicle godmode ON"; // Uncomment this to help see when it actually turns on and off
 	
-	waitUntil { !inSafeZone };
+	waitUntil { canbuild };
 
 	theVehicle removeEventHandler ["Fired", _EH_VFired];
 
 	theVehicle removeAllEventHandlers "handleDamage";
-  theVehicle addEventHandler ["handleDamage", {_this select 2}];
+        theVehicle addEventHandler ["handleDamage", {_this select 2}];
 	theVehicle allowDamage true;
 	
 	fnc_usec_damageVehicle = compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\fn_damageHandlerVehicle.sqf";
