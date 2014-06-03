@@ -41,7 +41,6 @@ while {true} do {
 	
 };
 
-
 // edit by infiSTAR.de - No DMG if   vehicle is Locked & has no crew & has a Plot within 50m. OR within 120m of Safezone
 private["_unit","_selection","_strH","_total","_damage","_needUpdate"];
 _unit = _this select 0;
@@ -55,7 +54,7 @@ _state = false;
         [12060.471,12638.533],[1606.6443,7803.5156],[11447.91,11364.536],
         [13441.16,5429.3013],[12944.227,12766.889],[10066.4,5434.24],[2306.17,9633.46],
         [4065.87,10818.9],[3332.07,3923.91],[6326.4805,7809.4888],[1704.5732,12841.845]];
-if ((locked _unit && (count (crew _unit)) == 0) || (_state))) exitWith {};
+if ((locked _unit && (count (crew _unit)) == 0) && ((count(nearestObjects [_unit,60]) > 0) || (_state))) exitWith {};
 if (_selection != "") then
 {
         _strH = "hit_" + _selection;
