@@ -41,7 +41,7 @@ while {true} do {
 	
 };
 
-// edit by infiSTAR.de - No DMG if   vehicle is Locked & has no crew & has a Plot within 50m. OR within 120m of Safezone
+// edit by infiSTAR.de - No DMG if   vehicle is Locked & has no crew & within 120m of Safezone.
 private["_unit","_selection","_strH","_total","_damage","_needUpdate"];
 _unit = _this select 0;
 _selection = _this select 1;
