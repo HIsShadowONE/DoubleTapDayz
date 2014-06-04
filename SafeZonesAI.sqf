@@ -1,9 +1,14 @@
-// Despawn AI around safezones (Lunchbox). You're welcome.
+// Despawn AI around safezones (Lunchbox). 
 if (isNil 'no_ai_loop') then {no_ai_loop = true;};
 		while {true} do {
 			waitUntil { !canbuild };
-			_pos = getPosATL (vehicle player);
-			_ai = _pos nearEntities ["Man",350]; // Change number for range. 
-			{if ((!isPlayer _x) && (!isAgent _x)) then {deletevehicle _x;};} forEach _ai;
+			_pos = getPos (vehicle player);
+			_nearunits = _pos nearEntities ["Man",1000];
+			_unitskilled=[];
+			{
+			if ((_x in allunits) and !(_x in Agents) and !(_x in playableunits))then{
+			deletevehicle _x;
+			};
+			} forEach _nearunits;
 			sleep 1;
-				};
+			};
